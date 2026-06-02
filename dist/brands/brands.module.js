@@ -10,12 +10,16 @@ exports.BrandsModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const brand_entity_1 = require("../database/entities/brand.entity");
+const brands_controller_1 = require("./brands.controller");
+const brands_service_1 = require("./brands.service");
 let BrandsModule = class BrandsModule {
 };
 exports.BrandsModule = BrandsModule;
 exports.BrandsModule = BrandsModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([brand_entity_1.Brand])],
+        controllers: [brands_controller_1.BrandsController],
+        providers: [brands_service_1.BrandsService],
     })
 ], BrandsModule);
 //# sourceMappingURL=brands.module.js.map
