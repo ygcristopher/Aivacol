@@ -1,0 +1,26 @@
+[
+  {
+    "plate": "BRA2E19",
+    "chassis": "9BWZZZ377VT004251",
+    "renavam": "00123456789",
+    "year_manufacture": 2022,
+    "model_name": "Onix LT",
+    "brand_name": "Chevrolet"
+  },
+  {
+    "plate": "QWE5R67",
+    "chassis": "3N1AB7AP4KY345671",
+    "renavam": "00987654321",
+    "year_manufacture": 2023,
+    "model_name": "HB20 Comfort",
+    "brand_name": "Hyundai"
+  },
+  {
+    "plate": "XYZ1A23",
+    "chassis": "93Y4SRD84HJ765432",
+    "renavam": "00765432109",
+    "year_manufacture": 2021,
+    "model_name": "Argo Drive",
+    "brand_name": "Fiat"
+  }
+]
