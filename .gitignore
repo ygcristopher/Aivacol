@@ -1,0 +1,6 @@
+node_modules
+
+# Environment files (keep only the template versioned)
+.env
+.env.*
+!.env.example
