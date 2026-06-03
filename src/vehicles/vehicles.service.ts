@@ -14,6 +14,8 @@ import { Model } from '../database/entities/model.entity';
 import { Vehicle } from '../database/entities/vehicle.entity';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
+import { RabbitmqService } from '../messaging/rabbitmq.service';
+import { AuditService } from '../audit/audit.service';
 
 type MssqlDriverError = {
   number?: number;
@@ -30,6 +32,8 @@ export class VehiclesService {
     private readonly modelsRepository: Repository<Model>,
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
+    private readonly rabbitmq: RabbitmqService,
+    private readonly audit: AuditService,
   ) {}
 
   async create(payload: CreateVehicleDto, createdBy: string): Promise<Vehicle> {
@@ -45,6 +49,8 @@ export class VehiclesService {
     try {
       const savedVehicle = await this.vehiclesRepository.save(vehicle);
       await this.invalidateVehiclesListCache();
+      this.rabbitmq.publish('vehicle.created', { vehicle: savedVehicle });
+      await this.audit.record('vehicle.created', savedVehicle);
       return savedVehicle;
     } catch (error: unknown) {
       this.handleDatabaseError(error, 'Vehicle');
@@ -112,6 +118,8 @@ export class VehiclesService {
     try {
       const updatedVehicle = await this.vehiclesRepository.save(vehicle);
       await this.invalidateVehiclesListCache();
+      this.rabbitmq.publish('vehicle.updated', { vehicle: updatedVehicle });
+      await this.audit.record('vehicle.updated', updatedVehicle);
       return updatedVehicle;
     } catch (error: unknown) {
       this.handleDatabaseError(error, 'Vehicle');
@@ -128,6 +136,8 @@ export class VehiclesService {
     try {
       await this.vehiclesRepository.remove(vehicle);
       await this.invalidateVehiclesListCache();
+      this.rabbitmq.publish('vehicle.removed', { vehicleId: vehicle.id });
+      await this.audit.record('vehicle.removed', { id: vehicle.id });
     } catch (error: unknown) {
       this.handleDatabaseError(error, 'Vehicle');
     }
