@@ -10,6 +10,7 @@ import { BrandsModule } from './brands/brands.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MessagingModule } from './messaging/messaging.module';
 import { Brand } from './database/entities/brand.entity';
 import { Model } from './database/entities/model.entity';
 import { User } from './database/entities/user.entity';
@@ -59,6 +60,7 @@ import { VehiclesModule } from './vehicles/vehicles.module';
         };
       },
     }),
+    MessagingModule,
     UsersModule,
     AuthModule,
     BrandsModule,
