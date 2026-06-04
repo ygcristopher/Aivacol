@@ -36,6 +36,6 @@ export class UpdateVehicleDto {
   yearManufacture?: number;
 
   @IsOptional()
-  @IsUUID('4', { message: 'Model ID must be a valid UUID' })
+  @IsUUID('all', { message: 'Model ID must be a valid UUID' })
   modelId?: string;
 }

@@ -14,6 +14,6 @@ export class UpdateModelDto {
   name?: string;
 
   @IsOptional()
-  @IsUUID('4', { message: 'Brand ID must be a valid UUID' })
+  @IsUUID('all', { message: 'Brand ID must be a valid UUID' })
   brandId?: string | null;
 }

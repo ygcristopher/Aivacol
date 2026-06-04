@@ -36,6 +36,6 @@ export class CreateVehicleDto {
   yearManufacture!: number;
 
   @IsNotEmpty({ message: 'Model ID is required' })
-  @IsUUID('4', { message: 'Model ID must be a valid UUID' })
+  @IsUUID('all', { message: 'Model ID must be a valid UUID' })
   modelId!: string;
 }
