@@ -79,7 +79,7 @@ export class VehiclesService {
     return vehicles;
   }
 
-  async findOne(id: number): Promise<Vehicle> {
+  async findOne(id: string): Promise<Vehicle> {
     const vehicle = await this.vehiclesRepository.findOne({
       where: { id },
       relations: {
@@ -96,7 +96,7 @@ export class VehiclesService {
     return vehicle;
   }
 
-  async update(id: number, payload: UpdateVehicleDto): Promise<Vehicle> {
+  async update(id: string, payload: UpdateVehicleDto): Promise<Vehicle> {
     const vehicle = await this.vehiclesRepository.findOne({ where: { id } });
 
     if (!vehicle) {
@@ -126,7 +126,7 @@ export class VehiclesService {
     }
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const vehicle = await this.vehiclesRepository.findOne({ where: { id } });
 
     if (!vehicle) {
@@ -143,7 +143,7 @@ export class VehiclesService {
     }
   }
 
-  private async ensureModelExists(modelId: number): Promise<void> {
+  private async ensureModelExists(modelId: string): Promise<void> {
     const modelExists = await this.modelsRepository.existsBy({ id: modelId });
 
     if (!modelExists) {
