@@ -1,26 +1,271 @@
-[
-  {
-    "plate": "BRA2E19",
-    "chassis": "9BWZZZ377VT004251",
-    "renavam": "00123456789",
-    "year_manufacture": 2022,
-    "model_name": "Onix LT",
-    "brand_name": "Chevrolet"
-  },
-  {
-    "plate": "QWE5R67",
-    "chassis": "3N1AB7AP4KY345671",
-    "renavam": "00987654321",
-    "year_manufacture": 2023,
-    "model_name": "HB20 Comfort",
-    "brand_name": "Hyundai"
-  },
-  {
-    "plate": "XYZ1A23",
-    "chassis": "93Y4SRD84HJ765432",
-    "renavam": "00765432109",
-    "year_manufacture": 2021,
-    "model_name": "Argo Drive",
-    "brand_name": "Fiat"
-  }
-]
+{
+  "brands": [
+    {
+      "id": 1,
+      "name": "Ford",
+      "created_at": "2026-06-03T10:00:00Z",
+      "updated_at": "2026-06-03T10:00:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 2,
+      "name": "Volkswagen",
+      "created_at": "2026-06-03T10:00:00Z",
+      "updated_at": "2026-06-03T10:00:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 3,
+      "name": "Hyundai",
+      "created_at": "2026-06-03T10:00:00Z",
+      "updated_at": "2026-06-03T10:00:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 4,
+      "name": "Chevrolet",
+      "created_at": "2026-06-03T10:00:00Z",
+      "updated_at": "2026-06-03T10:00:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 5,
+      "name": "Fiat",
+      "created_at": "2026-06-03T10:00:00Z",
+      "updated_at": "2026-06-03T10:00:00Z",
+      "created_by": "aivacol"
+    }
+  ],
+  "models": [
+    {
+      "id": 1,
+      "name": "Fiesta",
+      "brand_id": 1,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 2,
+      "name": "Focus",
+      "brand_id": 1,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 3,
+      "name": "Ranger",
+      "brand_id": 1,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 4,
+      "name": "Gol",
+      "brand_id": 2,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 5,
+      "name": "Polo",
+      "brand_id": 2,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 6,
+      "name": "Tiguan",
+      "brand_id": 2,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 7,
+      "name": "HB20",
+      "brand_id": 3,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 8,
+      "name": "Creta",
+      "brand_id": 3,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 9,
+      "name": "Onix",
+      "brand_id": 4,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 10,
+      "name": "Tracker",
+      "brand_id": 4,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 11,
+      "name": "Argo",
+      "brand_id": 5,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 12,
+      "name": "Toro",
+      "brand_id": 5,
+      "created_at": "2026-06-03T10:05:00Z",
+      "updated_at": "2026-06-03T10:05:00Z",
+      "created_by": "aivacol"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 1,
+      "license_plate": "ABC1234",
+      "chassis": "9BWZZZ3CZ24046123",
+      "renavam": "12345678901",
+      "year": 2020,
+      "model_id": 1,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 2,
+      "license_plate": "DEF5678",
+      "chassis": "9BWZZZ3CZ24046124",
+      "renavam": "12345678902",
+      "year": 2021,
+      "model_id": 2,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 3,
+      "license_plate": "GHI9101",
+      "chassis": "9BWZZZ3CZ24046125",
+      "renavam": "12345678903",
+      "year": 2019,
+      "model_id": 3,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 4,
+      "license_plate": "JKL1121",
+      "chassis": "9BWZZZ3CZ24046126",
+      "renavam": "12345678904",
+      "year": 2022,
+      "model_id": 4,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 5,
+      "license_plate": "MNO1314",
+      "chassis": "9BWZZZ3CZ24046127",
+      "renavam": "12345678905",
+      "year": 2020,
+      "model_id": 5,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 6,
+      "license_plate": "PQR1516",
+      "chassis": "9BWZZZ3CZ24046128",
+      "renavam": "12345678906",
+      "year": 2023,
+      "model_id": 6,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 7,
+      "license_plate": "STU1718",
+      "chassis": "9BWZZZ3CZ24046129",
+      "renavam": "12345678907",
+      "year": 2021,
+      "model_id": 7,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 8,
+      "license_plate": "VWX1920",
+      "chassis": "9BWZZZ3CZ24046130",
+      "renavam": "12345678908",
+      "year": 2022,
+      "model_id": 8,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 9,
+      "license_plate": "YZA2122",
+      "chassis": "9BWZZZ3CZ24046131",
+      "renavam": "12345678909",
+      "year": 2020,
+      "model_id": 9,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 10,
+      "license_plate": "BCD2324",
+      "chassis": "9BWZZZ3CZ24046132",
+      "renavam": "12345678910",
+      "year": 2023,
+      "model_id": 10,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 11,
+      "license_plate": "EFG2526",
+      "chassis": "9BWZZZ3CZ24046133",
+      "renavam": "12345678911",
+      "year": 2021,
+      "model_id": 11,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    },
+    {
+      "id": 12,
+      "license_plate": "HIJ2728",
+      "chassis": "9BWZZZ3CZ24046134",
+      "renavam": "12345678912",
+      "year": 2022,
+      "model_id": 12,
+      "created_at": "2026-06-03T10:10:00Z",
+      "updated_at": "2026-06-03T10:10:00Z",
+      "created_by": "aivacol"
+    }
+  ]
+}
