@@ -1,9 +1,8 @@
 import {
-  IsInt,
   IsOptional,
   IsString,
+  IsUUID,
   MaxLength,
-  Min,
   MinLength,
 } from 'class-validator';
 
@@ -15,7 +14,6 @@ export class UpdateModelDto {
   name?: string;
 
   @IsOptional()
-  @IsInt({ message: 'Brand ID must be an integer' })
-  @Min(1, { message: 'Brand ID must be a positive number' })
-  brandId?: number | null;
+  @IsUUID('4', { message: 'Brand ID must be a valid UUID' })
+  brandId?: string | null;
 }
