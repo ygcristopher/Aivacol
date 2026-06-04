@@ -48,7 +48,7 @@ export class ModelsService {
     });
   }
 
-  async findOne(id: number): Promise<Model> {
+  async findOne(id: string): Promise<Model> {
     const model = await this.modelsRepository.findOne({
       where: { id },
       relations: { brand: true },
@@ -61,7 +61,7 @@ export class ModelsService {
     return model;
   }
 
-  async update(id: number, payload: UpdateModelDto): Promise<Model> {
+  async update(id: string, payload: UpdateModelDto): Promise<Model> {
     const model = await this.modelsRepository.findOne({ where: { id } });
 
     if (!model) {
@@ -84,7 +84,7 @@ export class ModelsService {
     }
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const model = await this.modelsRepository.findOne({ where: { id } });
 
     if (!model) {
@@ -98,7 +98,7 @@ export class ModelsService {
     }
   }
 
-  private async ensureBrandExists(brandId: number | null): Promise<void> {
+  private async ensureBrandExists(brandId: string | null): Promise<void> {
     if (brandId === null) {
       return;
     }
