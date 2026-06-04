@@ -13,10 +13,11 @@ export class CreateModelsTable1717320000003 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'uniqueidentifier',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'NEWSEQUENTIALID()',
           },
           {
             name: 'name',
@@ -25,7 +26,7 @@ export class CreateModelsTable1717320000003 implements MigrationInterface {
             isNullable: false,
             isUnique: true,
           },
-          { name: 'brand_id', type: 'int', isNullable: true },
+          { name: 'brand_id', type: 'uniqueidentifier', isNullable: true },
           {
             name: 'created_at',
             type: 'datetime2',

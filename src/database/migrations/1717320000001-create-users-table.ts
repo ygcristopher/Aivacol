@@ -8,10 +8,11 @@ export class CreateUsersTable1717320000001 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'uniqueidentifier',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'NEWSEQUENTIALID()',
           },
           {
             name: 'username',

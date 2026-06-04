@@ -13,10 +13,11 @@ export class CreateVehiclesTable1717320000004 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'uniqueidentifier',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'NEWSEQUENTIALID()',
           },
           {
             name: 'plate',
@@ -40,7 +41,7 @@ export class CreateVehiclesTable1717320000004 implements MigrationInterface {
             isUnique: true,
           },
           { name: 'year_manufacture', type: 'int', isNullable: false },
-          { name: 'model_id', type: 'int', isNullable: false },
+          { name: 'model_id', type: 'uniqueidentifier', isNullable: false },
           {
             name: 'created_at',
             type: 'datetime2',
