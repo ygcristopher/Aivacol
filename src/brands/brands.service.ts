@@ -41,7 +41,7 @@ export class BrandsService {
     });
   }
 
-  async findOne(id: number): Promise<Brand> {
+  async findOne(id: string): Promise<Brand> {
     const brand = await this.brandsRepository.findOne({ where: { id } });
 
     if (!brand) {
@@ -51,7 +51,7 @@ export class BrandsService {
     return brand;
   }
 
-  async update(id: number, payload: UpdateBrandDto): Promise<Brand> {
+  async update(id: string, payload: UpdateBrandDto): Promise<Brand> {
     const brand = await this.brandsRepository.findOne({ where: { id } });
 
     if (!brand) {
@@ -69,7 +69,7 @@ export class BrandsService {
     }
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const brand = await this.brandsRepository.findOne({ where: { id } });
 
     if (!brand) {
