@@ -2,6 +2,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsString,
+  IsUUID,
   Matches,
   Max,
   MaxLength,
@@ -35,7 +36,6 @@ export class CreateVehicleDto {
   yearManufacture!: number;
 
   @IsNotEmpty({ message: 'Model ID is required' })
-  @IsInt({ message: 'Model ID must be an integer' })
-  @Min(1, { message: 'Model ID must be a positive number' })
-  modelId!: number;
+  @IsUUID('4', { message: 'Model ID must be a valid UUID' })
+  modelId!: string;
 }
