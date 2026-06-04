@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Patch,
@@ -26,6 +28,7 @@ export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(
     @Body() payload: CreateBrandDto,
     @Req() request: AuthenticatedRequest,
@@ -52,8 +55,8 @@ export class BrandsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseIntPipe) id: number) {
     await this.brandsService.remove(id);
-    return { message: 'Brand deleted successfully' };
   }
 }
