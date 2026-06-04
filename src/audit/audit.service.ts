@@ -40,7 +40,7 @@ export class AuditService implements OnModuleInit, OnModuleDestroy {
   }
 
   async record(event: string, payload: unknown): Promise<void> {
-    if (!this.collection) { // CORRIJIR para dar reconnect
+    if (!this.collection) {
       this.logger.debug('Audit collection not available; skipping record');
       return;
     }
