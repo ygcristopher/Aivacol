@@ -1,4 +1,7 @@
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import { DataSource } from 'typeorm';
 
@@ -19,6 +22,7 @@ const appDataSource = new DataSource({
   options: {
     encrypt: process.env.DB_ENCRYPT === 'true',
     trustServerCertificate: process.env.DB_TRUST_CERT === 'true',
+    connectTimeout: 15000,
   },
   synchronize: false,
   logging: process.env.DB_LOGGING === 'true',
