@@ -12,8 +12,8 @@ import { Model } from './model.entity';
 
 @Entity({ name: 'vehicles' })
 export class Vehicle extends AuditableEntity {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Index('UQ_vehicles_plate', { unique: true })
   @Column({ type: 'nvarchar', length: 10 })
@@ -30,8 +30,8 @@ export class Vehicle extends AuditableEntity {
   @Column({ name: 'year_manufacture', type: 'int' })
   yearManufacture!: number;
 
-  @Column({ name: 'model_id', type: 'int' })
-  modelId!: number;
+  @Column({ name: 'model_id', type: 'uuid' })
+  modelId!: string;
 
   @ManyToOne(() => Model, (model) => model.vehicles, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'model_id' })

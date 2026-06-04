@@ -11,8 +11,8 @@ import { Model } from './model.entity';
 
 @Entity({ name: 'brands' })
 export class Brand extends AuditableEntity {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Index('UQ_brands_name', { unique: true })
   @Column({ type: 'nvarchar', length: 100 })

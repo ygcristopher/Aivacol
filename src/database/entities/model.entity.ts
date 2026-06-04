@@ -14,15 +14,15 @@ import { Vehicle } from './vehicle.entity';
 
 @Entity({ name: 'models' })
 export class Model extends AuditableEntity {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Index('UQ_models_name', { unique: true })
   @Column({ type: 'nvarchar', length: 120 })
   name!: string;
 
-  @Column({ name: 'brand_id', type: 'int', nullable: true })
-  brandId!: number | null;
+  @Column({ name: 'brand_id', type: 'uuid', nullable: true })
+  brandId!: string | null;
 
   @ManyToOne(() => Brand, (brand) => brand.models, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'brand_id' })

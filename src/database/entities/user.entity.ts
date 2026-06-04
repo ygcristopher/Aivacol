@@ -4,8 +4,8 @@ import { AuditableEntity } from '../../common/entities/auditable.entity';
 
 @Entity({ name: 'users' })
 export class User extends AuditableEntity {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Index('UQ_users_username', { unique: true })
   @Column({ type: 'nvarchar', length: 80 })
