@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 
 import { Public } from '../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
@@ -11,6 +11,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
+  @HttpCode(HttpStatus.CREATED)
   register(@Body() payload: RegisterDto) {
     return this.authService.register(payload);
   }
