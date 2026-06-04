@@ -23,7 +23,10 @@ export class AuditService implements OnModuleInit, OnModuleDestroy {
     try {
       const url = process.env.MONGODB_URL ?? 'mongodb://mongo:27017';
       const dbName = process.env.MONGODB_DB ?? 'fleet';
-      this.client = new MongoClient(url);
+      this.client = new MongoClient(url, {
+        connectTimeoutMS: 3000,
+        serverSelectionTimeoutMS: 3000,
+      });
       await this.client.connect();
       this.db = this.client.db(dbName);
       this.collection = this.db.collection<AuditRecord>('vehicle_audit');
@@ -37,13 +40,22 @@ export class AuditService implements OnModuleInit, OnModuleDestroy {
   }
 
   async record(event: string, payload: unknown): Promise<void> {
-    if (!this.collection) {
+    if (!this.collection) { // CORRIJIR para dar reconnect
       this.logger.debug('Audit collection not available; skipping record');
       return;
     }
 
-    const rec: AuditRecord = { event, payload, createdAt: new Date() };
-    await this.collection.insertOne(rec);
+    try {
+      const rec: AuditRecord = { event, payload, createdAt: new Date() };
+      await Promise.race([
+        this.collection.insertOne(rec),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Audit timeout')), 3000),
+        ),
+      ]);
+    } catch (err) {
+      this.logger.warn(`Audit record failed: ${String(err)}`);
+    }
   }
 
   async onModuleDestroy(): Promise<void> {

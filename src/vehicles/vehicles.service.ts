@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,6 +24,7 @@ type MssqlDriverError = {
 
 @Injectable()
 export class VehiclesService {
+  private readonly logger: Logger = new Logger(VehiclesService.name);
   private readonly vehiclesListCacheKey = 'vehicles:list:v1';
 
   constructor(
@@ -58,12 +60,15 @@ export class VehiclesService {
   }
 
   async findAll(): Promise<Vehicle[]> {
-    const cachedVehicles = await this.cacheManager.get<Vehicle[]>(
-      this.vehiclesListCacheKey,
-    );
-
-    if (cachedVehicles) {
-      return cachedVehicles;
+    try {
+      const cached = await this.cacheManager.get<Vehicle[]>(
+        this.vehiclesListCacheKey,
+      );
+      if (cached) return cached;
+    } catch (err: unknown) {
+      this.logger.debug(
+        `Cache get falhou, buscando no banco: ${err instanceof Error ? err.message : String(err)}`,
+      );
     }
 
     const vehicles = await this.vehiclesRepository.find({
@@ -75,7 +80,14 @@ export class VehiclesService {
       order: { id: 'ASC' },
     });
 
-    await this.cacheManager.set(this.vehiclesListCacheKey, vehicles);
+    try {
+      await this.cacheManager.set(this.vehiclesListCacheKey, vehicles);
+    } catch (err: unknown) {
+      this.logger.debug(
+        `Cache set falhou: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
+
     return vehicles;
   }
 
@@ -162,7 +174,13 @@ export class VehiclesService {
   }
 
   private async invalidateVehiclesListCache(): Promise<void> {
-    await this.cacheManager.del(this.vehiclesListCacheKey);
+    try {
+      await this.cacheManager.del(this.vehiclesListCacheKey);
+    } catch (err: unknown) {
+      this.logger.debug(
+        `Cache invalidate falhou: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
   }
 
   private handleDatabaseError(error: unknown, entityName: string): never {

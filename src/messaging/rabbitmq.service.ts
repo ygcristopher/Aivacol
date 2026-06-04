@@ -17,7 +17,18 @@ export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
     try {
       const url =
         process.env.RABBITMQ_URL ?? 'amqp://guest:guest@rabbitmq:5672';
-      this.connection = await amqplib.connect(url);
+
+      const connectWithTimeout = Promise.race([
+        amqplib.connect(url),
+        new Promise<never>((_, reject) =>
+          setTimeout(
+            () => reject(new Error('RabbitMQ connection timeout')),
+            3000,
+          ),
+        ),
+      ]);
+
+      this.connection = await connectWithTimeout;
       this.channel = await this.createChannel();
       await this.assertExchange();
       this.logger.log('Connected to RabbitMQ');
@@ -27,7 +38,6 @@ export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
       this.channel = undefined;
     }
   }
-
   private async createChannel(): Promise<amqplib.Channel> {
     if (!this.connection) {
       throw new Error('Connection not established');

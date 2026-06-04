@@ -4,6 +4,8 @@ import { INestApplication } from '@nestjs/common';
 import type { Server } from 'http';
 
 import { AppModule } from '../../src/app.module';
+import { AuditService } from '../../src/audit/audit.service';
+import { RabbitmqService } from '../../src/messaging/rabbitmq.service';
 
 describe('Auth + Vehicles (integration)', () => {
   let app: INestApplication;
@@ -12,29 +14,33 @@ describe('Auth + Vehicles (integration)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
-
+    })
+      .overrideProvider(RabbitmqService)
+      .useValue({ publish: jest.fn() })
+      .overrideProvider(AuditService)
+      .useValue({ record: jest.fn() })
+      .compile();
     app = moduleFixture.createNestApplication();
+
     await app.init();
+
     httpServer = app.getHttpServer() as Server;
-  }, 60000);
+  }, 30000);
 
   afterAll(async () => {
     await app.close();
-  });
+  }, 10000);
 
   it('registers, logs in, creates model and vehicle', async () => {
     const username = `testuser${Date.now()}`;
     const password = 'Password123!';
     const email = `${username}@local.test`;
 
-    // register
     await request(httpServer)
       .post('/auth/register')
       .send({ username, password, email })
       .expect(201);
 
-    // login
     const login = await request(httpServer)
       .post('/auth/login')
       .send({ username, password })
@@ -43,7 +49,6 @@ describe('Auth + Vehicles (integration)', () => {
     const token = (login.body as { access_token?: string }).access_token;
     expect(token).toBeDefined();
 
-    // create brand
     const brandResp = await request(httpServer)
       .post('/brands')
       .set('Authorization', `Bearer ${token}`)
@@ -52,7 +57,6 @@ describe('Auth + Vehicles (integration)', () => {
 
     const brandId = (brandResp.body as { id?: number }).id;
 
-    // create model
     const modelResp = await request(httpServer)
       .post('/models')
       .set('Authorization', `Bearer ${token}`)
@@ -61,7 +65,6 @@ describe('Auth + Vehicles (integration)', () => {
 
     const modelId = (modelResp.body as { id?: number }).id;
 
-    // create vehicle
     const vehicleResp = await request(httpServer)
       .post('/vehicles')
       .set('Authorization', `Bearer ${token}`)
@@ -77,5 +80,5 @@ describe('Auth + Vehicles (integration)', () => {
       .expect(201);
 
     expect((vehicleResp.body as { id?: number }).id).toBeDefined();
-  }, 20000);
+  }, 30000);
 });

@@ -4,6 +4,8 @@ import request from 'supertest';
 import { App } from 'supertest/types';
 import { Response } from 'supertest';
 import { AppModule } from './../src/app.module';
+import { AuditService } from '../src/audit/audit.service';
+import { RabbitmqService } from '../src/messaging/rabbitmq.service';
 
 type HealthResponse = {
   service: string;
@@ -17,7 +19,12 @@ describe('AppController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(RabbitmqService)
+      .useValue({ publish: jest.fn() })
+      .overrideProvider(AuditService)
+      .useValue({ record: jest.fn() })
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();

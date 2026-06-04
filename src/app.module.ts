@@ -54,9 +54,13 @@ import { VehiclesModule } from './vehicles/vehicles.module';
         );
         const redisTtl = Number(configService.get<string>('CACHE_TTL', '60'));
 
+        const keyvRedis = new KeyvRedis(`redis://${redisHost}:${redisPort}`);
+
+        keyvRedis.on('error', () => undefined);
+
         return {
           ttl: redisTtl,
-          stores: [new KeyvRedis(`redis://${redisHost}:${redisPort}`)],
+          stores: [keyvRedis],
         };
       },
     }),
