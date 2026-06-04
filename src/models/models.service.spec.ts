@@ -44,24 +44,27 @@ describe('ModelsService', () => {
   afterEach(() => jest.resetAllMocks());
 
   it('creates a model when brand exists', async () => {
+    const brandId = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+    const modelId = 'f47ac10b-58cc-4372-a567-0e02b2c3d480';
     brandsRepo.existsBy!.mockResolvedValue(true);
-    const mockModel = { id: 1, name: 'X', brandId: 2 };
+    const mockModel = { id: modelId, name: 'X', brandId };
     modelsRepo.create!.mockReturnValue(mockModel);
     modelsRepo.save!.mockResolvedValue(mockModel);
 
-    const result = await service.create({ name: 'X', brandId: 2 }, 'me');
+    const result = await service.create({ name: 'X', brandId }, 'me');
 
-    expect(brandsRepo.existsBy).toHaveBeenCalledWith({ id: 2 });
+    expect(brandsRepo.existsBy).toHaveBeenCalledWith({ id: brandId });
     expect(modelsRepo.create).toHaveBeenCalled();
     expect(modelsRepo.save).toHaveBeenCalledWith(mockModel);
     expect(result).toEqual(mockModel);
   });
 
   it('throws when brand does not exist', async () => {
+    const invalidBrandId = 'f47ac10b-58cc-4372-a567-0e02b2c3d999';
     brandsRepo.existsBy!.mockResolvedValue(false);
 
     await expect(
-      service.create({ name: 'X', brandId: 99 }, 'me'),
+      service.create({ name: 'X', brandId: invalidBrandId }, 'me'),
     ).rejects.toThrow();
   });
 
