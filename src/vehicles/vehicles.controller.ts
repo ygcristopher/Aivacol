@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Patch,
@@ -26,6 +28,7 @@ export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(
     @Body() payload: CreateVehicleDto,
     @Req() request: AuthenticatedRequest,
@@ -52,8 +55,8 @@ export class VehiclesController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseIntPipe) id: number) {
     await this.vehiclesService.remove(id);
-    return { message: 'Vehicle deleted successfully' };
   }
 }
