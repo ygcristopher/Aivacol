@@ -71,21 +71,23 @@ describe('VehiclesService', () => {
   afterEach(() => jest.resetAllMocks());
 
   it('creates a vehicle when model exists and invalidates cache', async () => {
+    const modelId = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+    const vehicleId = 'f47ac10b-58cc-4372-a567-0e02b2c3d480';
     modelsRepo.existsBy!.mockResolvedValue(true);
     const payload = {
       plate: 'ABC1234',
       chassis: 'CHASSIS1',
       renavam: 'RENAVAM1',
       yearManufacture: 2020,
-      modelId: 1,
+      modelId,
     };
-    const created = { id: 1, ...payload };
+    const created = { id: vehicleId, ...payload };
     vehiclesRepo.create!.mockReturnValue(created);
     vehiclesRepo.save!.mockResolvedValue(created);
 
     const result = await service.create(payload, 'me');
 
-    expect(modelsRepo.existsBy).toHaveBeenCalledWith({ id: 1 });
+    expect(modelsRepo.existsBy).toHaveBeenCalledWith({ id: modelId });
     expect(vehiclesRepo.save).toHaveBeenCalledWith(created);
     expect(cache.del).toHaveBeenCalled();
     expect(result).toEqual(created);
@@ -103,12 +105,14 @@ describe('VehiclesService', () => {
   });
 
   it('updates a vehicle and publishes audit', async () => {
-    const existing = { id: 2, plate: 'OLD', modelId: 1 } as Vehicle;
+    const vehicleId = 'f47ac10b-58cc-4372-a567-0e02b2c3d481';
+    const modelId = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+    const existing = { id: vehicleId, plate: 'OLD', modelId } as Vehicle;
     vehiclesRepo.findOne!.mockResolvedValue(existing);
     const saved = { ...existing, plate: 'NEW' };
     vehiclesRepo.save!.mockResolvedValue(saved);
 
-    const result = await service.update(2, { plate: 'NEW' });
+    const result = await service.update(vehicleId, { plate: 'NEW' });
 
     expect(result).toEqual(saved);
     const rabbit = rabbitMock;
@@ -124,11 +128,12 @@ describe('VehiclesService', () => {
   });
 
   it('removes a vehicle and publishes audit', async () => {
-    const existing = { id: 3 } as Vehicle;
+    const vehicleId = 'f47ac10b-58cc-4372-a567-0e02b2c3d482';
+    const existing = { id: vehicleId } as Vehicle;
     vehiclesRepo.findOne!.mockResolvedValue(existing);
     vehiclesRepo.remove!.mockResolvedValue(undefined as any);
 
-    await service.remove(3);
+    await service.remove(vehicleId);
 
     const rabbit = rabbitMock;
     const audit = auditMock;
