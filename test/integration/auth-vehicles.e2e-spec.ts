@@ -44,7 +44,7 @@ describe('Auth + Vehicles (integration)', () => {
     const login = await request(httpServer)
       .post('/auth/login')
       .send({ username, password })
-      .expect(201);
+      .expect(200);
 
     const token = (login.body as { access_token?: string }).access_token;
     expect(token).toBeDefined();
