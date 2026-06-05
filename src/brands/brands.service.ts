@@ -42,7 +42,10 @@ export class BrandsService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.brandsRepository.findOne({ where: { id } });
+    const normalizedId = id.trim();
+    const brand = await this.brandsRepository.findOne({
+      where: { id: normalizedId },
+    });
 
     if (!brand) {
       throw new NotFoundException('Brand not found');
@@ -52,7 +55,10 @@ export class BrandsService {
   }
 
   async update(id: string, payload: UpdateBrandDto): Promise<Brand> {
-    const brand = await this.brandsRepository.findOne({ where: { id } });
+    const normalizedId = id.trim();
+    const brand = await this.brandsRepository.findOne({
+      where: { id: normalizedId },
+    });
 
     if (!brand) {
       throw new NotFoundException('Brand not found');
@@ -70,7 +76,10 @@ export class BrandsService {
   }
 
   async remove(id: string): Promise<void> {
-    const brand = await this.brandsRepository.findOne({ where: { id } });
+    const normalizedId = id.trim();
+    const brand = await this.brandsRepository.findOne({
+      where: { id: normalizedId },
+    });
 
     if (!brand) {
       throw new NotFoundException('Brand not found');
