@@ -300,6 +300,61 @@ Authorization: Bearer <access_token>
 
 Se voce ja tem a collection pronta no Postman, exporte em formato v2.1 e versiona junto no repositorio para facilitar avaliacao tecnica.
 
+## Fluxo de Avaliacao Tecnica (Passo a Passo)
+
+1. Configure as variaveis de ambiente
+- Crie `.env` a partir de `.env.example` e ajuste as credenciais locais.
+
+2. Suba toda a stack
+
+```bash
+docker compose up --build -d
+```
+
+3. Confirme que os servicos estao saudaveis
+
+```bash
+docker compose ps
+docker compose logs -f app
+```
+
+4. Execute o fluxo de API no Postman
+- `POST /auth/register`
+- `POST /auth/login`
+- CRUD completo de `brands`, `models` e `vehicles`.
+
+5. Valide cache no Redis
+- Chame `GET /vehicles` duas vezes para observar cache hit.
+- Execute `POST/PATCH/DELETE /vehicles` para invalidar cache.
+- Chame `GET /vehicles` novamente para recriar a chave.
+
+6. Valide eventos na fila RabbitMQ
+- Abra o painel em `http://localhost:15672` (`guest/guest`).
+- Verifique exchange `fleet.events` e fila de observacao (ex.: `vehicle.events.audit`) com binding `vehicle.*`.
+- Execute `POST/PATCH/DELETE /vehicles` e confirme aumento de `messages_ready` na fila.
+
+7. Valide auditoria no MongoDB
+- Confirme insercoes na colecao `vehicle_audit` apos `create/update/delete` de veiculos.
+
+8. Rode os testes automatizados
+
+```bash
+npm test
+npm run test:e2e
+```
+
+9. Encerramento (opcional)
+
+```bash
+docker compose down
+```
+
+Para reset completo de ambiente e dados:
+
+```bash
+docker compose down -v
+```
+
 ## Endpoints e Contratos
 
 Base URL: `http://localhost:3000`
