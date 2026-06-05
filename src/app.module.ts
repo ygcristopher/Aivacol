@@ -52,14 +52,16 @@ import { VehiclesModule } from './vehicles/vehicles.module';
         const redisPort = Number(
           configService.get<string>('REDIS_PORT', '6379'),
         );
-        const redisTtl = Number(configService.get<string>('CACHE_TTL', '60'));
+        const redisTtlSeconds = Number(
+          configService.get<string>('CACHE_TTL', '60'),
+        );
 
         const keyvRedis = new KeyvRedis(`redis://${redisHost}:${redisPort}`);
 
         keyvRedis.on('error', () => undefined);
 
         return {
-          ttl: redisTtl,
+          ttl: redisTtlSeconds * 1000,
           stores: [keyvRedis],
         };
       },
