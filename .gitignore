@@ -1,4 +1,5 @@
 node_modules
+dist/
 
 # Environment files (keep only the template versioned)
 .env
